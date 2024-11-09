@@ -163,3 +163,121 @@ function sort012(arr) {
 }
 
 // console.log(sort012([0,1,0,2,1,0,1,2,0]))
+
+
+//second largest element in an array
+
+function getSecondLargest(arr) {
+  // Code Here
+  // let largest =-1
+  // let secondLargest=-1
+  // for(let i=0;i<arr.length;i++){
+  //     if(arr[i]>largest){
+  //       secondLargest=largest
+  //       largest=arr[i]
+        
+  //     }
+  //     if(arr[i]<largest && arr[i]>secondLargest){
+  //         secondLargest=arr[i]
+  //     }
+  // }
+  // return secondLargest
+  
+  let set=new Set(arr.sort((a,b)=>b-a))
+  return Array.from(set)[1] ?? -1
+  
+}
+
+// console.log(getSecondLargest([7,1,5,3,6,4]))
+
+
+//reverse array
+
+function reverseArray(arr) {
+  // your code here
+  // arr.reverse()
+  let start=0;
+  let end=arr.length-1
+  while(start<end){
+      [arr[start],arr[end]]=[arr[end],arr[start]]
+      start++
+      end--
+  }
+  
+  return arr
+}
+// console.log(reverseArray([7,1,5,3,6,4]))
+
+
+//reverse array till k
+
+function reverseArrayTillK(arr,i,k) {
+  // your code here
+  // arr.reverse()
+  let start=i;
+  let end=k
+  while(start<end){
+      [arr[start],arr[end]]=[arr[end],arr[start]]
+      start++
+      end--
+  }
+  
+  return arr
+}
+// console.log(reverseArrayTillK([7,1,5,3,6,4],3,5))
+
+
+//Rotate by k
+var rotate = function(nums, k) {
+  if(k> nums.length) {
+     k%=nums.length
+  }
+   //full reversed array
+   let reversedArray=nums.reverse()
+   let firstHalfReverse=reverseArrayTillK(reversedArray,0,k-1)
+   
+   let finalAnswer=reverseArrayTillK(firstHalfReverse,k,nums.length-1)
+   return finalAnswer
+ };
+//  function reverseArrayTillK(arr,i,k) {
+//    // your code here
+//    // arr.reverse()
+//    let start=i;
+//    let end=k
+//    while(start<end){
+//        [arr[start],arr[end]]=[arr[end],arr[start]]
+//        start++
+//        end--
+//    }
+   
+//    return arr
+//  }
+
+//  console.log(rotate([7,1,5,3,6,4],2))
+
+
+//removeDuplicates in sorted array
+var removeDuplicates = function(nums) {
+  if(nums.length==0) return 0
+  let startIndex=1
+  for(let i=1;i<nums.length;i++){
+      if(nums[i]!=nums[i-1]){
+          nums[startIndex]=nums[i]
+          startIndex++
+      }
+  }
+  return startIndex
+
+};
+
+//  console.log(removeDuplicates([1,1,2,2,3,4,4,5]))
+ 
+
+ //factorial
+
+ function factorial(n){
+  if(n==0) return 1
+  return n*factorial(n-1)
+}
+
+// console.log(factorial(5))
