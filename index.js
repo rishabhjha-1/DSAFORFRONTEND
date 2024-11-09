@@ -134,3 +134,32 @@ function segregate0and1(arr) {
   return arr;
 }
 // console.log(segregate0and1([0,1,0,0,1,0]))
+
+
+//sort 0 1 and 2
+
+function sort012(arr) {
+  // your code here
+  let start=0;
+  let mid=0;
+  let end=arr.length-1
+  while(mid<=end){
+      if(arr[mid]==1){
+          mid+=1
+        
+      }
+      else if(arr[mid]==0){
+          [arr[mid],arr[start]]=[arr[start],arr[mid]]
+            start+=1
+            mid+=1
+      }
+      else if(arr[mid]==2){
+          [arr[mid],arr[end]]=[arr[end],arr[mid]]
+          end-=1
+          
+      }
+  }
+  return arr
+}
+
+// console.log(sort012([0,1,0,2,1,0,1,2,0]))
