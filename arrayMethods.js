@@ -364,5 +364,390 @@ console.log(strn.includes("world", 7));  // true (starting search from index 7)
 
 
 
+//que using array
+class Queue {
+    constructor() {
+        this.items = [];
+    }
+  
+    // Add an element to the end of the queue
+    enqueue(element) {
+        this.items.push(element);
+    }
+  
+    // Remove and return the element from the front of the queue
+    dequeue() {
+        if (this.isEmpty()) {
+            return "Queue is empty";
+        }
+        return this.items.shift();
+    }
+  
+    // Return the element at the front of the queue without removing it
+    peek() {
+        if (this.isEmpty()) {
+            return "Queue is empty";
+        }
+        return this.items[0];
+    }
+  
+    // Check if the queue is empty
+    isEmpty() {
+        return this.items.length === 0;
+    }
+  
+    // Return the size of the queue
+    size() {
+        return this.items.length;
+    }
+  
+    // Clear the queue
+    clear() {
+        this.items = [];
+    }
+  }
+  
 
 
+//stack using two queue
+
+class Stack {
+    constructor() {
+        this.queue1 = [];
+        this.queue2 = [];
+    }
+
+    // Push an element onto the stack
+    push(element) {
+        this.queue1.push(element);
+    }
+
+    // Pop the top element from the stack
+    pop() {
+        if (this.isEmpty()) {
+            return "Stack is empty";
+        }
+
+        // Move all elements except the last one from queue1 to queue2
+        while (this.queue1.length > 1) {
+            this.queue2.push(this.queue1.shift());
+        }
+
+        // The last remaining element in queue1 is the "top" element of the stack
+        const poppedElement = this.queue1.shift();
+
+        // Swap the queues
+        [this.queue1, this.queue2] = [this.queue2, this.queue1];
+
+        return poppedElement;
+    }
+
+    // Get the top element of the stack without removing it
+    top() {
+        if (this.isEmpty()) {
+            return "Stack is empty";
+        }
+
+        while (this.queue1.length > 1) {
+            this.queue2.push(this.queue1.shift());
+        }
+
+        const topElement = this.queue1[0];
+
+        // Move the last element back to queue2 and swap
+        this.queue2.push(this.queue1.shift());
+        [this.queue1, this.queue2] = [this.queue2, this.queue1];
+
+        return topElement;
+    }
+
+    // Check if the stack is empty
+    isEmpty() {
+        return this.queue1.length === 0;
+    }
+
+    // Get the size of the stack
+    size() {
+        return this.queue1.length + this.queue2.length;
+    }
+}
+
+
+
+//stack using two queue
+class Queue {
+    constructor() {
+        this.stack1 = [];
+        this.stack2 = [];
+    }
+
+    // Add an element to the end of the queue
+    enqueue(element) {
+        this.stack1.push(element);
+    }
+
+    // Remove and return the element from the front of the queue
+    dequeue() {
+        if (this.isEmpty()) {
+            return "Queue is empty";
+        }
+
+        // Move elements from stack1 to stack2 only if stack2 is empty
+        if (this.stack2.length === 0) {
+            while (this.stack1.length > 0) {
+                this.stack2.push(this.stack1.pop());
+            }
+        }
+
+        return this.stack2.pop();
+    }
+
+    // Return the front element of the queue without removing it
+    front() {
+        if (this.isEmpty()) {
+            return "Queue is empty";
+        }
+
+        // Move elements from stack1 to stack2 only if stack2 is empty
+        if (this.stack2.length === 0) {
+            while (this.stack1.length > 0) {
+                this.stack2.push(this.stack1.pop());
+            }
+        }
+
+        return this.stack2[this.stack2.length - 1];
+    }
+
+    // Check if the queue is empty
+    isEmpty() {
+        return this.stack1.length === 0 && this.stack2.length === 0;
+    }
+
+    // Get the size of the queue
+    size() {
+        return this.stack1.length + this.stack2.length;
+    }
+}
+
+
+//circular queue
+/**
+ * @param {number} k
+ */
+var MyCircularQueue = function(k) {
+    this.queue = new Array(k); // Fixed-size array to hold elements
+    this.capacity = k; // Maximum capacity of the queue
+    this.front = -1; // Points to the front element in the queue
+    this.rear = -1; // Points to the rear element in the queue
+    this.count = 0; // Keeps track of the number of elements in the queue
+};
+
+/** 
+ * @param {number} value
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.enQueue = function(value) {
+    if (this.isFull()) return false; // Cannot enqueue if the queue is full
+
+    if (this.isEmpty()) {
+        this.front = 0; // Set front to 0 if this is the first element
+    }
+    
+    this.rear = (this.rear + 1) % this.capacity; // Circularly increment rear
+    this.queue[this.rear] = value; // Insert the element
+    this.count++; // Increase the count of elements
+    return true;
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.deQueue = function() {
+    if (this.isEmpty()) return false; // Cannot dequeue if the queue is empty
+
+    if (this.front === this.rear) { // Only one element left in the queue
+        this.front = -1;
+        this.rear = -1; // Reset both pointers to indicate the queue is empty
+    } else {
+        this.front = (this.front + 1) % this.capacity; // Circularly increment front
+    }
+    
+    this.count--; // Decrease the count of elements
+    return true;
+};
+
+/**
+ * @return {number}
+ */
+MyCircularQueue.prototype.Front = function() {
+    return this.isEmpty() ? -1 : this.queue[this.front]; // Return -1 if empty, otherwise front element
+};
+
+/**
+ * @return {number}
+ */
+MyCircularQueue.prototype.Rear = function() {
+    return this.isEmpty() ? -1 : this.queue[this.rear]; // Return -1 if empty, otherwise rear element
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.isEmpty = function() {
+    return this.count === 0; // Queue is empty if count is 0
+};
+
+/**
+ * @return {boolean}
+ */
+MyCircularQueue.prototype.isFull = function() {
+    return this.count === this.capacity; // Queue is full if count equals capacity
+};
+
+/** 
+ * Your MyCircularQueue object will be instantiated and called as such:
+ * var obj = new MyCircularQueue(k)
+ * var param_1 = obj.enQueue(value)
+ * var param_2 = obj.deQueue()
+ * var param_3 = obj.Front()
+ * var param_4 = obj.Rear()
+ * var param_5 = obj.isEmpty()
+ * var param_6 = obj.isFull()
+ */
+
+
+//Lru cache using ll and map
+
+/**
+ * @param {number} capacity
+ */
+var LRUCache = function(capacity) {
+    this.capacity = capacity;
+    this.cache = new Map(); // Map to store key-value pairs (the cache)
+    
+    // Double linked list helper to maintain access order (head is most recent, tail is least recent)
+    this.head = { next: null, prev: null }; // Sentinel node (dummy node for easier handling)
+    this.tail = { next: null, prev: null }; // Sentinel node (dummy node for easier handling)
+    
+    this.head.next = this.tail; // Initialize head -> tail
+    this.tail.prev = this.head; // Initialize tail <- head
+};
+
+/** 
+ * @param {number} key
+ * @return {number}
+ */
+LRUCache.prototype.get = function(key) {
+    if (!this.cache.has(key)) return -1; // If key not found, return -1
+    
+    const node = this.cache.get(key);
+    this.moveToHead(node); // Move the accessed node to the front (most recent)
+    
+    return node.value; // Return the value of the node
+};
+
+/** 
+ * @param {number} key 
+ * @param {number} value
+ * @return {void}
+ */
+LRUCache.prototype.put = function(key, value) {
+    if (this.cache.has(key)) {
+        const node = this.cache.get(key);
+        node.value = value; // Update the value
+        this.moveToHead(node); // Move to the front (most recent)
+    } else {
+        if (this.cache.size >= this.capacity) {
+            this.removeLRU(); // Remove the least recently used node
+        }
+        const newNode = { key, value, next: null, prev: null };
+        this.cache.set(key, newNode);
+        this.addToHead(newNode); // Add the new node to the front
+    }
+};
+
+// Helper method to add a node to the front (most recent)
+LRUCache.prototype.addToHead = function(node) {
+    node.next = this.head.next;
+    node.prev = this.head;
+    this.head.next.prev = node;
+    this.head.next = node;
+};
+
+// Helper method to move an existing node to the front (most recent)
+LRUCache.prototype.moveToHead = function(node) {
+    this.removeNode(node);
+    this.addToHead(node);
+};
+
+// Helper method to remove a node from the linked list
+LRUCache.prototype.removeNode = function(node) {
+    const prevNode = node.prev;
+    const nextNode = node.next;
+    prevNode.next = nextNode;
+    nextNode.prev = prevNode;
+};
+
+// Helper method to remove the least recently used node (tail.prev)
+LRUCache.prototype.removeLRU = function() {
+    const lruNode = this.tail.prev;
+    this.removeNode(lruNode);
+    this.cache.delete(lruNode.key); // Remove the node from the cache map
+};
+
+/** 
+ * Your LRUCache object will be instantiated and called as such:
+ * var obj = new LRUCache(capacity)
+ * var param_1 = obj.get(key)
+ * obj.put(key,value)
+ */
+
+
+
+//simple lru using class
+
+class LRUCache {
+    constructor(capacity) {
+      this.capacity = capacity; // Max capacity of the cache
+      this.cache = new Map(); // Using Map to maintain order of insertion and provide O(1) access
+    }
+  
+    // Get the value from cache
+    get(key) {
+      if (!this.cache.has(key)) {
+        return -1; // If key not found, return -1
+      }
+      const value = this.cache.get(key);
+      // Move the accessed key to the end (most recent)
+      this.cache.delete(key);
+      this.cache.set(key, value);
+      return value;
+    }
+  
+    // Put a new key-value pair into the cache
+    put(key, value) {
+      if (this.cache.has(key)) {
+        // If key already exists, delete and update it to move it to the end (most recent)
+        this.cache.delete(key);
+      }
+      // If cache exceeds the capacity, remove the least recently used item (first item in Map)
+      if (this.cache.size >= this.capacity) {
+        this.cache.delete(this.cache.keys().next().value); // Deletes the first item in Map
+      }
+      // Insert the new key-value pair as the most recent
+      this.cache.set(key, value);
+    }
+  }
+  
+  // Example Usage
+  const cache = new LRUCache(2); // Create a cache with capacity 2
+  cache.put(1, 1); // Cache is {1=1}
+  cache.put(2, 2); // Cache is {1=1, 2=2}
+  console.log(cache.get(1)); // Returns 1, Cache is {2=2, 1=1}
+  cache.put(3, 3); // Removes key 2, Cache is {1=1, 3=3}
+  console.log(cache.get(2)); // Returns -1 (not found)
+  cache.put(4, 4); // Removes key 1, Cache is {3=3, 4=4}
+  console.log(cache.get(1)); // Returns -1 (not found)
+  console.log(cache.get(3)); // Returns 3
+  console.log(cache.get(4)); // Returns 4
+  

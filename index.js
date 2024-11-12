@@ -1,7 +1,4 @@
 //max product subArray
-
-const { Link } = require("react-router-dom");
-
 //infoedge
 var maxProduct = function (nums) {
   let maxProduct = nums[0];
@@ -28,7 +25,24 @@ var maxSubArray = function (nums) {
   }
   return maxSum;
 };
-// console.log(maxSubArray([1,2,5,-9,5,6,6]))
+
+var maxSubArray2 = function (nums) {
+  let currSum = nums[0]; //if make it 0 then start i from 0 in for loop
+  let maxSum = nums[0];
+  for (let i = 1; i < nums.length; i++) {
+    currSum += nums[i]
+    if(currSum>maxSum)   maxSum=currSum
+    if(currSum<0){
+      currSum=0
+    }
+  }
+  return maxSum;
+};
+
+
+console.log(maxSubArray([1,2,5,-9,5,-6,6,-9]))
+console.log(maxSubArray2([1,2,5,-9,5,-6,6,-9]),"check")
+
 
 var fib = function (n) {
   // if(n<=1) return n;
@@ -582,3 +596,62 @@ var isValid = function(s) {
   console.log(stack)
   return stack.length==0
 };
+
+
+//binary search
+
+var search = function(nums, target) {
+  let start=0
+  let end=nums.length-1;
+  while(start<=end){
+   let mid=parseInt((start+end)/2)
+   if(nums[mid]===target){
+       return mid
+   }else if(nums[mid]>target){
+       end=mid-1
+   }else{
+       start=mid+1
+   }
+  }
+  return -1
+   
+};
+
+
+// Given an array nums sorted in non-decreasing order, return the maximum between the number of positive integers and the number of negative integers.
+var maximumCount = function(nums) {
+  let first =0;
+  let end=nums.length-1
+  let firstPositive=nums.length
+  while(first<=end){
+      const mid = Math.floor((first + end) / 2);
+      if(nums[mid]>0){
+          firstPositive=mid
+          end=mid-1
+
+      }else{
+          first=mid+1
+      }
+
+  }
+   first =0;
+   end=nums.length-1
+  let lastNegative=-1
+   while(first<=end){
+      const mid = Math.floor((first + end) / 2);
+      if(nums[mid]<0){
+          lastNegative=mid
+          first=mid+1
+
+
+      }else{
+          end=mid-1
+
+      }
+
+  }
+  return Math.max(nums.length-firstPositive,lastNegative+1)
+
+  
+};
+
