@@ -411,7 +411,7 @@ class Queue {
 
 //stack using two queue
 
-class Stack {
+class StackUsingQueue {
     constructor() {
         this.queue1 = [];
         this.queue2 = [];
@@ -444,21 +444,27 @@ class Stack {
 
     // Get the top element of the stack without removing it
     top() {
+        // if (this.isEmpty()) {
+        //     return "Stack is empty";
+        // }
+
+        // while (this.queue1.length > 1) {
+        //     this.queue2.push(this.queue1.shift());
+        // }
+
+        // const topElement = this.queue1[0];
+
+        // // Move the last element back to queue2 and swap
+        // this.queue2.push(this.queue1.shift());
+        // [this.queue1, this.queue2] = [this.queue2, this.queue1];
+
+        // return topElement;
         if (this.isEmpty()) {
             return "Stack is empty";
         }
-
-        while (this.queue1.length > 1) {
-            this.queue2.push(this.queue1.shift());
-        }
-
-        const topElement = this.queue1[0];
-
-        // Move the last element back to queue2 and swap
-        this.queue2.push(this.queue1.shift());
-        [this.queue1, this.queue2] = [this.queue2, this.queue1];
-
-        return topElement;
+    
+        // Access the last element directly
+        return this.queue1[this.queue1.length - 1];
     }
 
     // Check if the stack is empty
@@ -472,10 +478,47 @@ class Stack {
     }
 }
 
+const stackusingQue = new StackUsingQueue();
+
+// Test: Check if stack is initially empty
+console.log("Is stack empty?", stackusingQue.isEmpty()); // Expected: true
+
+// Test: Push elements onto the stack
+// stackusingQue.push(10);
+// stackusingQue.push(20);
+// stackusingQue.push(30);
+// console.log("Stack after pushing 10, 20, 30:", stackusingQue.queue1); // Expected: [10, 20, 30]
+
+// // Test: Get the top element
+// console.log("Top element:", stackusingQue.top()); // Expected: 30
+
+// // Test: Size of the stack
+// console.log("Size of stack:", stackusingQue.size()); // Expected: 3
+
+// // Test: Pop the top element
+// console.log("Popped element:", stackusingQue.pop()); // Expected: 30
+
+// // Test: Get the new top element after popping
+// console.log("New top element:", stackusingQue.top()); // Expected: 20
+
+// // Test: Size of stack after pop
+// console.log("Size of stack after pop:", stackusingQue.size()); // Expected: 2
+
+// // Test: Pop all elements
+// console.log("Popped element:", stackusingQue.pop()); // Expected: 20
+// console.log("Popped element:", stackusingQue.pop()); // Expected: 10
+
+// // Test: Pop from an empty stack
+// console.log("Popped element from empty stack:", stackusingQue.pop()); // Expected: "Stack is empty"
+
+// // Test: Check if stack is empty after all pops
+// console.log("Is stack empty after all pops?", stackusingQue.isEmpty()); // Expected: true
+
+
 
 
 //stack using two queue
-class Queue {
+class QueueUsingStack {
     constructor() {
         this.stack1 = [];
         this.stack2 = [];
@@ -706,7 +749,7 @@ LRUCache.prototype.removeLRU = function() {
 
 //simple lru using class
 
-class LRUCache {
+class LRUCacheClass {
     constructor(capacity) {
       this.capacity = capacity; // Max capacity of the cache
       this.cache = new Map(); // Using Map to maintain order of insertion and provide O(1) access
@@ -751,3 +794,41 @@ class LRUCache {
   console.log(cache.get(3)); // Returns 3
   console.log(cache.get(4)); // Returns 4
   
+
+  //inbuilt sort in array 
+
+//   JavaScript's Array.prototype.sort() method sorts the elements of an array in place and returns the sorted array. By default, it sorts elements as strings in ascending order, which can produce unexpected results when sorting numbers.
+
+const fruits= ["banana", "Apple", "cherry"]; 
+// console.log(fruits.sort()) //output:[ 'Apple', 'banana', 'cherry' ] //based on first alpha
+
+const numbers = [30, 4, 100, 1];
+// console.log(numbers.sort()) //output:[ 1, 100, 30, 4 ] //unexpected result as it compares string(one,hundred....)
+
+//resolve by using comparison func
+//>0 b comes first
+//==0 nothing happen
+//<0 a comes first
+
+// console.log(numbers.sort((a,b)=>a-b)) //output:[ 1, 4, 30, 100 ] ascending
+// console.log(numbers.sort((a,b)=>b-a)) //output:[ 100, 30, 4, 1 ] descending
+
+
+//sorting in object
+
+const obj=[{
+    name:"Rj",
+    email:"rj@gmail.com",
+    age:25
+},
+{
+    name:"Rj1",
+    email:"rj@gmail.com",
+    age:24
+},
+{
+    name:"Rj2",
+    email:"rj@gmail.com",
+    age:26
+}]
+// console.log(obj.sort((a,b)=>a.age-b.age))

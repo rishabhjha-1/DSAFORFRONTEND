@@ -655,3 +655,95 @@ var maximumCount = function(nums) {
   
 };
 
+//maximum sliding window
+
+function maxSlidingWindowQueue(arr, k) {
+  let result = [];
+  let dequeue = []; // Holds indices of the elements, maintaining a decreasing order based on values in arr.
+
+  for (let i = 0; i < arr.length; i++) {
+    // Remove elements not in the current window
+    if (dequeue.length > 0 && dequeue[0] < i - k + 1) {
+      dequeue.shift();
+    }
+
+    // Remove elements from the back of deque while the current element is larger
+    // This ensures that elements in deque are always in decreasing order
+    while (dequeue.length > 0 && arr[dequeue[dequeue.length - 1]] < arr[i]) {
+      dequeue.pop();
+    }
+
+    // Add current element index to deque
+    dequeue.push(i);
+
+    // When we've hit the size of the window (i >= k - 1), we can start adding results
+    if (i >= k - 1) {
+      result.push(arr[dequeue[0]]); // The front of the deque is the max of the current window
+    }
+  }
+
+  return result;
+}
+
+
+//bubble sort
+
+function bubbleSort(arr){
+  let n=arr.length
+  for(let i=0;i<n;i++){
+    for(let j=0;j<n-i-1;j++){
+      if(arr[j]>arr[i]){
+        [arr[j],arr[j+1]]=[arr[j+1],arr[j]]
+      }
+    }
+  }
+  return arr
+}
+// console.log(bubbleSort([5, 2, 8, 7, 4, 6,4]),"bubble")
+//best tc o(n)
+//average tc o(n^2)
+//worst tc o(n^2)
+
+//space o(1)
+
+
+//selection sort
+function selectionSort(arr){
+  let n=arr.length
+  for (let i=0; i<n-1 ;i++){
+    let minIndex=i
+    for(let j=i+1;j<n;j++){
+      if(arr[j]<arr[minIndex]){
+        minIndex=j
+      }
+    }
+    if(minIndex!=i) [arr[minIndex],arr[i]]=[arr[i],arr[minIndex]]
+  }
+  return arr
+}
+// console.log(selectionSort([5, 2, 8, 7, 4, 6,4]),"selectionSort")
+// tc o(n)
+//space o(1)
+
+//insertion sort
+function insertionSort(arr){
+  let n=arr.length
+  for (let i=1; i<n ;i++){
+    let key=arr[i]
+    let j=i-1
+    while(j>=0 && arr[j]>key){
+      arr[j+1]=arr[j]
+      j--
+    }
+    arr[j+1]=key
+ 
+  }
+  return arr
+}
+// console.log(insertionSort([5, 2, 8, 7, 4, 6,4]),"insertionSort")
+// console.log(bubbleSort([5, 2, 8, 7, 4, 6,4]),"bubble")
+//best tc o(n)
+//average tc o(n^2)
+//worst tc o(n^2)
+
+//space o(1)
