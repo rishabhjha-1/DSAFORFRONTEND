@@ -747,3 +747,29 @@ function insertionSort(arr){
 //worst tc o(n^2)
 
 //space o(1)
+
+
+//merge sort
+
+function mergeSort(arr){
+  if(arr.length<=1) return arr
+  let mid=Math.floor(arr.length/2)
+  let leftSort=mergeSort(arr.slice(0,mid))
+  let rightSort=mergeSort(arr.slice(mid))
+  return mergeArray(leftSort,rightSort)
+}
+//we can use like we merge string
+function mergeArray(leftSort,rightSort){
+  let sortedArray=[]
+  while(leftSort.length && rightSort.length){
+     if(leftSort[0]<rightSort[0]){
+      sortedArray.push(leftSort.shift())
+     }else{
+      sortedArray.push(rightSort.shift())
+      
+     }
+  }
+  return [...sortedArray,...leftSort,...rightSort]
+  
+}
+console.log(mergeSort([5, 2, 8, 7, 4, 6,4]),"mergeSort")

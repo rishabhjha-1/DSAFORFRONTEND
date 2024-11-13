@@ -42,14 +42,13 @@ Array.prototype.myReduce = function (callback, initialValue) {
   }
 
   const array = this; 
-  const length = array.length >>> 0; 
+//   const length = array.length >>> 0; 
   let accumulator = initialValue?initialValue :0;
-  let startIndex = 0;
 
 
 
   // Iterate over the array
-  for (let i = startIndex; i < length; i++) {
+  for (let i = 0; i <  array.length; i++) {
     if (i in array) {
       // Skip holes in sparse arrays
       accumulator = callback(accumulator, array[i], i, array);
@@ -103,8 +102,10 @@ arr1.unshift(44);
 // console.log(arr1.indexOf(2))
 
 //SORT
-arr1.sort();
-// console.log(arr1,"ascending")
+arr1.sort(); // only string
+// console.log(arr1,"ascending")}
+
+arr1.sort((a, b) => a-b); //ascending number
 
 arr1.sort((a, b) => b - a);
 // console.log(arr1,"descending")
@@ -832,3 +833,32 @@ const obj=[{
     age:26
 }]
 // console.log(obj.sort((a,b)=>a.age-b.age))
+
+
+
+//remove cycle in linked list
+function removeCycle(head) {
+  let slow = head;
+  let fast = head;
+  let hasCycle = false;
+
+  // Detect if there's a cycle
+  while (fast !== null && fast.next !== null) {
+    slow = slow.next;
+    fast = fast.next.next;
+    if (slow === fast) {
+      hasCycle = true;
+      break;
+    }
+  }
+
+  if (hasCycle) {
+    let start = head;
+    while (start.next !== slow.next) {
+      start = start.next;
+      slow = slow.next;
+    }
+    slow.next = null; // Remove the loop
+  }
+}
+
