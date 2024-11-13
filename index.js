@@ -40,8 +40,8 @@ var maxSubArray2 = function (nums) {
 };
 
 
-console.log(maxSubArray([1,2,5,-9,5,-6,6,-9]))
-console.log(maxSubArray2([1,2,5,-9,5,-6,6,-9]),"check")
+// console.log(maxSubArray([1,2,5,-9,5,-6,6,-9]))
+// console.log(maxSubArray2([1,2,5,-9,5,-6,6,-9]),"check")
 
 
 var fib = function (n) {
@@ -773,3 +773,38 @@ function mergeArray(leftSort,rightSort){
   
 }
 console.log(mergeSort([5, 2, 8, 7, 4, 6,4]),"mergeSort")
+
+
+
+//search in an rotated array
+function searchRotatedArray(nums, target) {
+  let left = 0;
+  let right = nums.length - 1;
+
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2);
+
+    if (nums[mid] === target) {
+      return mid; // Target found
+    }
+
+    // Determine which half is sorted
+    if (nums[left] <= nums[mid]) {
+      // Left half is sorted
+      if (nums[left] <= target && target < nums[mid]) {
+        right = mid - 1; // Target is in the left half
+      } else {
+        left = mid + 1; // Target is in the right half
+      }
+    } else {
+      // Right half is sorted
+      if (nums[mid] < target && target <= nums[right]) {
+        left = mid + 1; // Target is in the right half
+      } else {
+        right = mid - 1; // Target is in the left half
+      }
+    }
+  }
+
+  return -1; // Target not found
+}
