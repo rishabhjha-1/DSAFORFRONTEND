@@ -862,3 +862,26 @@ function removeCycle(head) {
   }
 }
 
+
+//remove duplicate from 3 arrays
+//times internet (round 2)
+
+let arrrr1=["apple","banana","mango"]
+let arrrr2=["cucumber","banana","orange"]
+let arrrr3=["orange","mango"]
+//first approach
+
+function removeDup(){
+ return  Array.from(new Set([...arrrr1,...arrrr2,...arrrr3]))
+
+}
+//second approach
+function removeDup2(){
+
+  const distinctArray = [...arrrr1, ...arrrr2, ...arrrr3].filter(
+    (item, index, array) => array.indexOf(item) === index
+  );
+  return distinctArray
+}
+
+console.log(removeDup2())
