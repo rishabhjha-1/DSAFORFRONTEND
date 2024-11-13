@@ -130,3 +130,114 @@
 //   };
   
 //   export default useThrottle;
+
+
+
+//theme control machine coding
+// src/context/ThemeContext.js
+// import React, { createContext, useState, useEffect } from 'react';
+
+// export const ThemeContext = createContext();
+
+// export const ThemeProvider = ({ children }) => {
+//   const [isDarkMode, setIsDarkMode] = useState(false);
+
+//   // Load the theme from localStorage or default to light mode
+//   useEffect(() => {
+//     const savedTheme = localStorage.getItem('theme');
+//     if (savedTheme) {
+//       setIsDarkMode(savedTheme === 'dark');
+//     }
+//   }, []);
+
+//   // Toggle theme and store the preference in localStorage
+//   const toggleTheme = () => {
+//     setIsDarkMode((prevTheme) => {
+//       const newTheme = !prevTheme;
+//       localStorage.setItem('theme', newTheme ? 'dark' : 'light');
+//       return newTheme;
+//     });
+//   };
+
+//   return (
+//     <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
+//       {children}
+//     </ThemeContext.Provider>
+//   );
+// };
+
+
+// src/components/ThemeToggle.js
+// import React, { useContext } from 'react';
+// import { ThemeContext } from '../context/ThemeContext';
+
+// const ThemeToggle = () => {
+//   const { isDarkMode, toggleTheme } = useContext(ThemeContext);
+
+//   return (
+//     <button onClick={toggleTheme}>
+//       {isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
+//     </button>
+//   );
+// };
+
+// export default ThemeToggle;
+
+
+
+/* src/index.css */
+// :root {
+//     --bg-color-light: #ffffff;
+//     --bg-color-dark: #121212;
+//     --text-color-light: #000000;
+//     --text-color-dark: #ffffff;
+//   }
+  
+//   body {
+//     background-color: var(--bg-color-light);
+//     color: var(--text-color-light);
+//     transition: background-color 0.3s ease, color 0.3s ease;
+//   }
+  
+//   /* Dark theme styles */
+//   body.dark-mode {
+//     background-color: var(--bg-color-dark);
+//     color: var(--text-color-dark);
+//   }
+  
+
+// src/App.js
+// import React, { useContext, useEffect } from 'react';
+// import { ThemeProvider, ThemeContext } from './context/ThemeContext';
+// import ThemeToggle from './components/ThemeToggle';
+// import './index.css';
+
+// function App() {
+//   const { isDarkMode } = useContext(ThemeContext);
+
+//   // Apply the dark mode class to the body element
+//   useEffect(() => {
+//     const body = document.body;
+//     if (isDarkMode) {
+//       body.classList.add('dark-mode');
+//     } else {
+//       body.classList.remove('dark-mode');
+//     }
+//   }, [isDarkMode]);
+
+//   return (
+//     <div>
+//       <h1>Dark/Light Theme Example</h1>
+//       <ThemeToggle />
+//     </div>
+//   );
+// }
+
+// export default function AppWrapper() {
+//   return (
+//     <ThemeProvider>
+//       <App />
+//     </ThemeProvider>
+//   );
+// }
+
