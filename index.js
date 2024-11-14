@@ -808,3 +808,70 @@ function searchRotatedArray(nums, target) {
 
   return -1; // Target not found
 }
+
+
+//infoedge
+function splitArrayIntoChunks(array, count) {
+  const result = [];
+  
+  for (let i = 0; i < array.length; i += count) {
+    result.push(array.slice(i, i + count));
+  }
+  
+  return result;
+}
+
+// Test cases
+// console.log(splitArrayIntoChunks([1, 2, 3, 4, 5, 6], 2)); // Output: [[1, 2], [3, 4], [5, 6]]
+// console.log(splitArrayIntoChunks([1, 2, 3, 4, 5, 6], 3)); // Output: [[1, 2, 3], [4, 5, 6]]
+
+
+
+//infoedge
+function flattenArray(arr) {
+  let result = [];
+  
+  arr.forEach(element => {
+    if (Array.isArray(element)) {
+      result = result.concat(flattenArray(element)); // Recursively flatten
+    } else {
+      result.push(element); // Add non-array elements directly
+    }
+  });
+
+  return result;
+}
+
+// Test cases
+// console.log(flattenArray([1, [2, [3, 4], 5], 6])); // Output: [1, 2, 3, 4, 5, 6]
+// console.log(flattenArray([1, [2, 3], [4, [5, [6]]]])); // Output: [1, 2, 3, 4, 5, 6]
+
+
+
+//infoedge
+
+function expandPath(path) {
+  const parts = path.split('/');
+  console.log({parts})
+  const result = [];
+  
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    
+    if (part === '..') {
+      // Replace ".." with the previous element in `result`, if any
+      if (result.length > 0) {
+        const prev = result[result.length - 1];
+        result.push(prev);
+      }
+    } else {
+      // Add normal directory part to result
+      result.push(part);
+    }
+  }
+
+  return result.join('/');
+}
+
+// Test
+console.log(expandPath("a/b/c/../../d/e/../..")); // Expected output: "/a/b/c/d/b/a/d/e/e"
