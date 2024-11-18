@@ -241,3 +241,78 @@
 //   );
 // }
 
+
+
+
+
+//otp 
+// import React, { useState, useRef } from "react";
+
+// interface OTPInputProps {
+//   length: number; // Number of OTP fields
+//   onChange: (otp: string) => void; // Callback with OTP value
+// }
+
+// const OTPInput: React.FC<OTPInputProps> = ({ length, onChange }) => {
+//   const [otp, setOtp] = useState<string[]>(Array(length).fill(""));
+//   const inputsRef = useRef<(HTMLInputElement | null)[]>([]);
+
+//   const handleInputChange = (value: string, index: number) => {
+//     const updatedOtp = [...otp];
+//     updatedOtp[index] = value;
+//     setOtp(updatedOtp);
+//     onChange(updatedOtp.join(""));
+
+//     if (value && index < length - 1) {
+//       inputsRef.current[index + 1]?.focus();
+//     }
+//   };
+
+//   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, index: number) => {
+//     if (e.key === "Backspace" && !otp[index] && index > 0) {
+//       const updatedOtp = [...otp];
+//       updatedOtp[index - 1] = "";
+//       setOtp(updatedOtp);
+//       onChange(updatedOtp.join(""));
+//       inputsRef.current[index - 1]?.focus();
+//     }
+//   };
+
+//   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+//     const pasteData = e.clipboardData.getData("text").slice(0, length);
+//     const updatedOtp = pasteData.split("").concat(Array(length - pasteData.length).fill(""));
+//     setOtp(updatedOtp);
+//     onChange(updatedOtp.join(""));
+
+//     // Focus the last input with content
+//     const lastIndex = pasteData.length - 1;
+//     inputsRef.current[lastIndex]?.focus();
+//   };
+
+//   return (
+//     <div style={{ display: "flex", gap: "8px" }}>
+//       {otp.map((value, index) => (
+//         <input
+//           key={index}
+//           type="text"
+//           maxLength={1}
+//           value={value}
+//           onChange={(e) => handleInputChange(e.target.value, index)}
+//           onKeyDown={(e) => handleKeyDown(e, index)}
+//           onPaste={handlePaste}
+//           ref={(el) => (inputsRef.current[index] = el)}
+//           style={{
+//             width: "40px",
+//             height: "40px",
+//             textAlign: "center",
+//             fontSize: "18px",
+//             border: "1px solid #ccc",
+//             borderRadius: "4px",
+//           }}
+//         />
+//       ))}
+//     </div>
+//   );
+// };
+
+// export default OTPInput;

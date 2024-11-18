@@ -846,13 +846,34 @@ function flattenArray(arr) {
 // console.log(flattenArray([1, [2, [3, 4], 5], 6])); // Output: [1, 2, 3, 4, 5, 6]
 // console.log(flattenArray([1, [2, 3], [4, [5, [6]]]])); // Output: [1, 2, 3, 4, 5, 6]
 
+//using closure and recursion
+function flattenArray(arr) {
+  const result = []; // Outer variable, part of the closure
+  
+  function recursiveFlatten(subArray) {
+    subArray.forEach(element => {
+      if (Array.isArray(element)) {
+        recursiveFlatten(element); // Recursively flatten
+      } else {
+        result.push(element); // Add non-array elements directly
+      }
+    });
+  }
+  
+  recursiveFlatten(arr); // Start the recursive flattening
+  return result;
+}
+
+// Example usage
+console.log(flattenArray([1, [2, [3, 4], 5], 6])); 
+
+
 
 
 //infoedge
 
 function expandPath(path) {
   const parts = path.split('/');
-  console.log({parts})
   const result = [];
   
   for (let i = 0; i < parts.length; i++) {
