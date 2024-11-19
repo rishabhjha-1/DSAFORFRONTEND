@@ -113,23 +113,30 @@
 
 
 
-// const useThrottle = (value, delay) => {
-//     const [throttledValue, setThrottledValue] = useState(value);
-  
-//     useEffect(() => {
-//       // Create a timeout reference to handle throttle behavior
-//       const handler = setTimeout(() => {
+
+// function useThrottle<T>(value: T, delay: number): T {
+//   const [throttledValue, setThrottledValue] = useState(value);
+//   const lastExecuted = useRef<number>(Date.now());
+
+//   useEffect(() => {
+//     const handler = setTimeout(() => {
+//       const now = Date.now();
+//       if (now - lastExecuted.current >= delay) {
 //         setThrottledValue(value);
-//       }, delay);
-  
-//       // Clean up timeout if the component unmounts or if `value` or `delay` changes
-//       return () => clearTimeout(handler);
-//     }, [value, delay]); // Only update when `value` or `delay` changes
-  
-//     return throttledValue;
-//   };
-  
-//   export default useThrottle;
+//         lastExecuted.current = now;
+//       }
+//     }, delay - (Date.now() - lastExecuted.current));
+
+//     return () => {
+//       clearTimeout(handler);
+//     };
+//   }, [value, delay]);
+
+//   return throttledValue;
+// }
+
+// export default useThrottle;
+
 
 
 
@@ -316,3 +323,16 @@
 // };
 
 // export default OTPInput;
+
+
+
+
+//usePrev
+// const usePrev=(value)=>{
+//     let prevValueRef=useRef()
+//     useEffect(()=>{
+//         prevValueRef.current=value
+//     },[value])
+// return prevValueRef.current;
+// }
+// export default usePrevious;

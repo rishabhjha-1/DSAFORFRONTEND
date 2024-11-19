@@ -873,26 +873,251 @@ console.log(flattenArray([1, [2, [3, 4], 5], 6]));
 //infoedge
 
 function expandPath(path) {
-  const parts = path.split('/');
+  const segments = path.split('/');
   const result = [];
   
-  for (let i = 0; i < parts.length; i++) {
-    const part = parts[i];
-    
-    if (part === '..') {
-      // Replace ".." with the previous element in `result`, if any
-      if (result.length > 0) {
-        const prev = result[result.length - 1];
-        result.push(prev);
+  for (let i = 0; i < segments.length; i++) {
+      if (segments[i] === '..') {
+          let dotCount = 1;
+          // Count consecutive '..'
+          while (i + 1 < segments.length && segments[i + 1] === '..') {
+              dotCount++;
+              i++;
+          }
+          
+          // Add elements from result based on dotCount
+          if (result.length >= dotCount) {
+              for (let j = dotCount - 1; j >= 0; j--) {
+                  result.push(result[result.length - dotCount]);
+              }
+          }
+      } else {
+          result.push(segments[i]);
       }
-    } else {
-      // Add normal directory part to result
-      result.push(part);
-    }
   }
-
+  
   return result.join('/');
 }
 
-// Test
-console.log(expandPath("a/b/c/../../d/e/../..")); // Expected output: "/a/b/c/d/b/a/d/e/e"
+// Test cases
+console.log(expandPath("x/y/../..")); // Should output: x/y/y/x
+console.log(expandPath("p/q/r/../../")); // Should output: p/q/r/r/q/p
+console.log(expandPath("m/n/o/../../../")); // Should output: m/n/o/o/n/m/m
+console.log(expandPath("a/b/c/../../d/e/../..")); // Should output: a/b/c/c/b/d/e/e/d
+
+
+//find first repeating
+function firstRepeating(arr){
+  let map={}
+  for (let i=0;i<arr.length;i++){
+    if(map[arr[i]]>=1){
+      return arr[i]
+
+    }else{
+      map[arr[i]]=(map[arr[i]] || 0)+1
+    }
+  }
+  return -1
+}
+// console.log(firstRepeating([4,2, 1,5 ,2, 0, 2]))
+
+
+
+
+
+//find first non repeating
+function firstNonRepeatingElement(arr) {
+  const frequencyMap = {};
+
+  // Step 1: Count the frequency of each element
+  for (let i = 0; i < arr.length; i++) {
+    frequencyMap[arr[i]] = (frequencyMap[arr[i]] || 0) + 1;
+  }
+
+  // Step 2: Find the first element with a frequency of 1
+  for (let i = 0; i < arr.length; i++) {
+    if (frequencyMap[arr[i]] === 1) {
+      return arr[i];
+    }
+  }
+
+  // Return -1 if no non-repeating element is found
+  return -1;
+}
+
+// // Example usage
+// const input = [4, 5, 1, 2, 0, 4];
+// const result = firstNonRepeatingElement(input);
+// console.log(result);  // Output: 5
+
+
+
+// Find Duplicates in an Array:
+
+// Given an array of integers, find all duplicates.
+// Example:
+// Input: [4, 3, 2, 7, 8, 2, 3, 1]
+// Output: [2, 3]
+
+//with set
+function findDuplicates1(arr) {
+  const seen = new Set();  // To keep track of elements we’ve already seen
+  const duplicates = [];   // To store the duplicates
+  
+  // Iterate through the array
+  for (let num of arr) {
+    if (seen.has(num)) {
+      // If the number is already in the set, it's a duplicate
+      duplicates.push(num);
+    } else {
+      // Otherwise, add the number to the set
+      seen.add(num);
+    }
+  }
+
+  return duplicates;
+}
+
+
+//without set
+function findDuplicates2(arr) {
+  const duplicates = [];
+  
+  // Traverse the array
+  for (let i = 0; i < arr.length; i++) {
+    const currentNum = Math.abs(arr[i]); // Use the absolute value to handle negative indices
+
+    // If the number at the index corresponding to currentNum is negative, it's a duplicate
+    if (arr[currentNum] < 0) {
+      duplicates.push(currentNum);
+    } else {
+      // Otherwise, negate the value at the index of the currentNum
+      arr[currentNum] = -arr[currentNum];
+    }
+  }
+  
+  return duplicates;
+}
+
+// // Example usage
+// const input = [4, 3, 2, 7, 8, 2, 3, 1];
+// const result = findDuplicates1(input);
+// console.log(result);  // Output: [2, 3]
+
+
+
+// Longest Common Prefix:
+
+// Given an array of strings, find the longest common prefix.
+// Example:
+// js
+// Copy code
+// Input: ["flower", "flow", "flight"]
+// Output: "fl"
+
+function longestCommonPrefix(strs) {
+  if (strs.length === 0) return "";
+
+  // Sort the strings to compare the first and last strings
+  strs.sort();
+
+  // Get the first and last string after sorting
+  let first = strs[0];
+  let last = strs[strs.length - 1];
+
+  let i = 0;
+  // Compare characters of first and last string until they mismatch
+  while (i < first.length && i < last.length && first[i] === last[i]) {
+    i++;
+  }
+
+  // The longest common prefix is the substring from the start to the mismatch
+  return first.substring(0, i);
+}
+
+// Test the function
+let input = ["flower", "flow", "flight"];
+console.log(longestCommonPrefix(input)); // Output: "fl"
+
+
+
+
+
+// Generate a DOM Tree from JSON:
+
+// Given a JSON structure, create a DOM tree dynamically.
+// Example:
+// js
+// Copy code
+// Input: { tag: "div", children: [{ tag: "p", text: "Hello" }] }
+// Output: <div><p>Hello</p></div>
+
+function createDOMTree(json) {
+  // Create the element based on the tag
+  const element = document.createElement(json.tag);
+
+  // If the element has text, add it as the text content
+  if (json.text) {
+    element.textContent = json.text;
+  }
+
+  // If the element has children, recursively create and append them
+  if (json.children && Array.isArray(json.children)) {
+    json.children.forEach(child => {
+      const childElement = createDOMTree(child);
+      element.appendChild(childElement);
+    });
+  }
+
+  return element;
+}
+
+// Example usage
+const json = {
+  tag: "div",
+  children: [
+    {
+      tag: "p",
+      text: "Hello"
+    }
+  ]
+};
+
+// Create the DOM tree and append it to the body or any other container
+// const domTree = createDOMTree(json);
+// document.body.appendChild(domTree);
+
+
+
+//lazy load image funtion
+// Function to lazy load images
+function lazyLoadImages() {
+  const images = document.querySelectorAll('img.lazy');
+
+  // Use IntersectionObserver to watch for images entering the viewport
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        // Replace the src with the data-src to load the image
+        img.src = img.dataset.src;
+        // Remove the lazy class once the image is loaded
+        img.classList.remove('lazy');
+        // Stop observing the image
+        observer.unobserve(img);
+      }
+    });
+  }, {
+    rootMargin: '100px', // Trigger image load a little before it enters the viewport
+  });
+
+  // Observe each lazy image
+  images.forEach(image => {
+    observer.observe(image);
+  });
+}
+
+// Call the lazy load function when the DOM is ready
+// document.addEventListener('DOMContentLoaded', lazyLoadImages);
+
+// Optional: In case of dynamically added images, you can call lazyLoadImages again
