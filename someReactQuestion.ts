@@ -336,3 +336,103 @@
 // return prevValueRef.current;
 // }
 // export default usePrevious;
+
+
+
+
+//accordian question - dotpe
+
+
+// import { useEffect, useState } from "react";
+// const fetchItemNames = async ():Promise<string[]> => {
+//     return ['Item 1', 'Item 2', 'Item 3'];
+//   };
+  
+//   const fetchItemDescription = async (itemName: string):Promise<string> => {
+//     console.log("fetching")
+//     return `${itemName} description loaded from API`;
+//   };
+
+
+// export default function TestPage() {
+//     const [itemNames, setItemNames] = useState<string[]>([]);
+//     const [showDescription,setShowDescription]=useState<Record<string,string>>({})
+//     const [openItem,setOpenItem]=useState<string | null>('') //caced approach
+
+
+//     useEffect(()=>{
+//         const getItems=async()=>{
+//             const res=await fetchItemNames() 
+//             setItemNames(res)
+//         }
+//         getItems()
+       
+
+//     },[])
+
+//     const toggleAccordion=async(name:string)=>{
+        // if(showDescription.itemName===name){
+        //     // If clicking the same item, hide the description
+        //     setShowDescription({})
+        // } else {
+        //     // If clicking a different item, show its description
+        //     const description=await fetchItemDescription(name)
+        //     setShowDescription({
+        //         itemName:name,
+        //         description:description
+        //     })
+        // }
+
+
+        //cached approach
+
+//         if (openItem === name) {
+//             setOpenItem(null); // close if already open
+//             return;
+//           }
+        
+//           // Only fetch if not already cached
+//           if (!showDescription[name]) {
+//             const description = await fetchItemDescription(name);
+//             setShowDescription ((prev) => ({
+//               ...prev,
+//               [name]: description,
+//             }));
+//           }
+        
+//           setOpenItem(name);
+//     }
+
+
+// 	return <div>{
+//         itemNames.map((item:string,index:number)=>{
+//             return(
+
+//                 <div className="flex flex-col gap-5" key={index} onClick={()=>toggleAccordion(item)}>
+//                     {item}
+//                     {/* {
+//                     showDescription.itemName==item && showDescription.description && (
+//                         <div>
+//                             {showDescription.description}
+//                         </div>
+//                     )
+                        
+                    
+//                 } */}
+
+//                 {/* cached approach */}
+//                 {openItem === item && (
+//             <div className="bg-gray-50 p-2">
+//               {showDescription[item] || "Loading..."}
+//             </div>
+//           )}
+
+//                 </div>
+               
+
+//             )
+//         })
+//         }
+
+//     </div>;
+// }
