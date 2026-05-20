@@ -436,3 +436,40 @@
 
 //     </div>;
 // }
+
+
+// traffice light question - driffle
+
+
+// import { useState, useEffect } from "react";
+// const TrafficSignal = () => {
+//   const [currentLight, setCurrentLight] = useState("Red");
+//   function startTrafficSignal() {
+//     setCurrentLight("Red");
+
+//     setTimeout(() => {
+//       setCurrentLight("Yellow");
+
+//       setTimeout(() => {
+//         setCurrentLight("Green");
+
+//         setTimeout(() => {
+//           startTrafficSignal();
+//         }, 2000);
+//       }, 1000);
+//     }, 3000);
+//   }
+//   useEffect(() => {
+//     startTrafficSignal();
+//   }, []);
+//   return (
+//     <div>
+//       <div>red -{currentLight == "Red" ? "on" : "off"} </div>
+//       <div>yellow -{currentLight == "Yellow" ? "on" : "off"}</div>
+
+//       <div>green -{currentLight == "Green" ? "on" : "off"}</div>
+//     </div>
+//   );
+// };
+// export default TrafficSignal;
+
