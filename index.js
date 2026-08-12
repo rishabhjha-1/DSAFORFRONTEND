@@ -1184,6 +1184,485 @@ console.log(nums.slice(0, k)); // [0, 1, 3, 0, 4] or any variation
 
 
 
+/*
+
+1. Two Pointers
+Core idea
+
+Use two indexes/pointers that move through the array instead of using nested loops.
+
+Usually:
+
+left  → → → 
+right ← ← ←
+
+or both move in the same direction.
+
+When to use Two Pointers
+
+Think:
+
+"Can I solve this by maintaining two positions in the array?"
+
+Common situations:
+
+Array is sorted
+Looking for a pair
+Comparing elements from both ends
+Removing duplicates
+Partitioning/rearranging an array
+Palindrome/string problems
+Example: Two Sum in Sorted Array
+
+Given:
+
+[1, 2, 4, 6, 8, 9]
+target = 10
+
+Brute force:
+
+1 + 2
+1 + 4
+1 + 6
+...
+
+O(n²)
+
+With two pointers:
+
+L                 R
+↓                 ↓
+[1, 2, 4, 6, 8, 9]
+
+Calculate:
+
+1 + 9 = 10
+
+Done.
+
+If:
+
+sum < target
+
+move left.
+
+If:
+
+sum > target
+
+move right.
+
+while (left < right) {
+    const sum = arr[left] + arr[right];
+
+    if (sum === target) {
+        return [left, right];
+    }
+
+    if (sum < target) {
+        left++;
+    } else {
+        right--;
+    }
+}
+Complexity
+Time: O(n)
+Space: O(1)
+2. Sliding Window
+
+Sliding Window is actually a specialized form of two pointers.
+
+Instead of just having two pointers, you maintain a contiguous window:
+
+[ left ........ right ]
+
+For example:
+
+[2, 1, 5, 1, 3, 2]
+    ↑        ↑
+   left     right
+
+You're continuously expanding/shrinking this window.
+
+When to use Sliding Window
+
+The key word is:
+
+CONTIGUOUS / SUBARRAY / SUBSTRING
+
+If the question asks:
+
+longest subarray
+shortest subarray
+maximum sum subarray of size K
+longest substring
+number of subarrays satisfying condition
+minimum window
+maximum window
+
+you should immediately think:
+
+Sliding Window
+
+Example
+
+Find maximum sum of k = 3 consecutive elements:
+
+[2, 1, 5, 1, 3, 2]
+
+Windows:
+
+[2, 1, 5] = 8
+[1, 5, 1] = 7
+[5, 1, 3] = 9
+[1, 3, 2] = 6
+
+Answer:
+
+9
+
+Instead of recalculating every window:
+
+2 + 1 + 5
+1 + 5 + 1
+5 + 1 + 3
+
+we remove the outgoing element and add the incoming element.
+
+windowSum -= arr[left]
+left++
+
+right++
+windowSum += arr[right]
+Complexity
+Time: O(n)
+Space: O(1)
+3. Prefix Sum
+
+Prefix Sum is different.
+
+Think:
+
+"I need to repeatedly calculate the sum of a range."
+
+Suppose:
+
+arr = [2, 4, 1, 5, 3]
+
+Create:
+
+prefix = [0, 2, 6, 7, 12, 15]
+
+Meaning:
+
+prefix[i] = sum of elements before i
+
+Now suppose you want:
+
+sum from index 1 to 3
+
+That's:
+
+4 + 1 + 5 = 10
+
+Using prefix:
+
+prefix[4] - prefix[1]
+
+12 - 2 = 10
+
+So a range sum becomes O(1).
+
+When to use Prefix Sum
+
+Think:
+
+"There are lots of range-sum queries."
+
+For example:
+
+sum(2, 5)
+sum(1, 7)
+sum(4, 9)
+sum(0, 6)
+...
+
+Instead of calculating each range repeatedly.
+
+Without prefix sum
+
+Each query could take:
+
+O(n)
+With prefix sum
+
+Build:
+
+O(n)
+
+Then every query:
+
+O(1)
+
+Total:
+
+O(n + q)
+
+where q = number of queries.
+
+4. Kadane's Algorithm
+
+Kadane's is extremely specific.
+
+Think:
+
+"I need the maximum sum of a contiguous subarray."
+
+Example:
+
+[-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+Maximum-sum contiguous subarray:
+
+[4, -1, 2, 1]
+
+Sum:
+
+6
+
+Answer:
+
+6
+The key Kadane idea
+
+At every element, ask:
+
+Should I continue the previous subarray, or start a new subarray here?
+
+Formula:
+
+current = max(arr[i], current + arr[i])
+
+And:
+
+maxSum = max(maxSum, current)
+
+Code:
+
+let current = arr[0];
+let maxSum = arr[0];
+
+for (let i = 1; i < arr.length; i++) {
+    current = Math.max(arr[i], current + arr[i]);
+    maxSum = Math.max(maxSum, current);
+}
+
+return maxSum;
+Complexity
+Time: O(n)
+Space: O(1)
+The BIG Difference
+
+This is the part you should memorize.
+
+Technique	Think about
+Two Pointers	Two positions moving through an array
+Sliding Window	A contiguous range that expands/shrinks
+Prefix Sum	Fast repeated range-sum queries
+Kadane	Maximum-sum contiguous subarray
+How to identify them in an interview
+Question 1
+
+Given a sorted array, find two numbers whose sum is X.
+
+Think:
+
+Two Pointers
+
+left →     ← right
+Question 2
+
+Find the longest substring without repeating characters.
+
+Think:
+
+Sliding Window
+
+[left ........ right]
+
+Because you're looking at a contiguous substring.
+
+Question 3
+
+Given an array, answer 10,000 queries asking for the sum between L and R.
+
+Think:
+
+Prefix Sum
+
+prefix[R + 1] - prefix[L]
+Question 4
+
+Find the maximum sum of a contiguous subarray.
+
+Think:
+
+Kadane
+
+current = max(arr[i], current + arr[i])
+Important: Sliding Window vs Kadane
+
+These two confuse people a lot.
+
+Both can involve contiguous subarrays, but the problem is different.
+
+Sliding Window
+
+Usually you have a condition/window constraint.
+
+Example:
+
+Longest substring with at most K distinct characters.
+
+You maintain:
+
+[left ........ right]
+
+and shrink when the condition becomes invalid.
+
+Kadane
+
+You're specifically optimizing sum.
+
+Example:
+
+Maximum sum contiguous subarray.
+
+You ask:
+
+Should I continue?
+
+or
+
+Should I start fresh?
+Prefix Sum vs Sliding Window
+
+Another common confusion.
+
+Prefix Sum
+
+Best when:
+
+I have MANY range-sum queries.
+
+Example:
+
+sum(2, 8)
+sum(4, 10)
+sum(0, 5)
+...
+Sliding Window
+
+Best when:
+
+I'm moving through contiguous elements
+and maintaining a condition/sum.
+
+Example:
+
+maximum sum of k consecutive elements
+A Simple Decision Tree
+
+When you see an array question, go through this:
+
+                 ARRAY PROBLEM
+                       |
+          Is it about a pair?
+                       |
+                YES → Two Pointers
+                       |
+                      NO
+                       ↓
+          Is it contiguous?
+        (subarray / substring)
+                       |
+              ┌────────┴────────┐
+              |                 |
+             YES               NO
+              |                 |
+       Is it about          Think other
+       max subarray         techniques
+       SUM?
+          |
+      YES → Kadane
+          |
+         NO
+          ↓
+   Is there a window
+   / constraint?
+          |
+      YES → Sliding Window
+
+And separately:
+
+Need lots of range SUM queries?
+            ↓
+       Prefix Sum
+What you should memorize
+🟢 Two Pointer
+
+Pair / sorted / opposite ends
+
+left + right
+🔵 Sliding Window
+
+Contiguous + window condition
+
+[left ........ right]
+🟡 Prefix Sum
+
+Repeated range SUM
+
+prefix[R] - prefix[L]
+🔴 Kadane
+
+Maximum contiguous SUM
+
+max(arr[i], current + arr[i])
+One more important point
+
+Sliding Window is not only for arrays. It is extremely common with strings too:
+
+"abcabcbb"
+
+For:
+
+Longest substring without repeating characters
+
+you'd use:
+
+Sliding Window + HashSet/Map
+
+Whereas:
+
+Maximum subarray sum
+
+you'd use:
+
+Kadane
+
+And:
+
+Sum from index L to R repeatedly
+
+you'd use:
+
+Prefix Sum
+
+*/
+
+
+
 
 
 
