@@ -1180,6 +1180,24 @@ function removeElement(nums, val) {
   return k;
 }
 
+// Top K Frequent Elements
+
+var topKFrequent = function(nums, k) {
+    let map={}
+    for(let i=0;i<nums.length;i++){
+      map[nums[i]]=(map[nums[i]] || 0) +1
+
+    }
+    
+    const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
+    let ans=[]
+    for(let i=0;i<k;i++){
+        ans.push(Number(sorted[i][0]))
+       
+    }
+    return ans
+};
+
 
 
 /*If current element is not val, copy it to position k, then increment k.
