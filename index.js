@@ -40,8 +40,32 @@ var maxSubArray2 = function (nums) {
 };
 
 
+
 // console.log(maxSubArray([1,2,5,-9,5,-6,6,-9]))
 // console.log(maxSubArray2([1,2,5,-9,5,-6,6,-9]),"check")
+
+
+//above fails for nums =[-2,1]
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+var maxSubArray = function(nums) {
+    let currSum=0
+    maxSum=-9999999
+    if(nums.length<2){
+        return nums[0]
+    }
+    for(let i=0;i<nums.length;i++){
+        currSum +=nums[i]
+        maxSum=Math.max(maxSum,currSum)
+        if(currSum<0){
+            currSum=0
+        }
+    }
+    return maxSum
+    
+};
 
 
 var fib = function (n) {
