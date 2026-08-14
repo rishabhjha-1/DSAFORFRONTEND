@@ -1221,6 +1221,29 @@ var subarraySum = function(nums, k) {
 };
 
 
+// Given an array arr[] containing integers and an integer k, your task is to find the length of the longest subarray where the sum of its elements is equal to the given value k. If there is no subarray with sum equal to k, return 0.
+
+	longestSubarray(arr, k) {
+		// code here
+		let obj = {"0":-1}
+		let sum = 0
+		let count = 0
+		let maxLen = 0
+		
+		for (let i = 0; i<arr.length; i++) {
+			sum += arr[i];
+			if (obj[sum - k] != null) {
+			  
+				maxLen = Math.max(maxLen, (i - obj[sum - k]))
+				
+			}
+			if (obj[sum] == null) obj[sum] = i
+		}
+		
+		return maxLen
+		
+	}
+
 
 /*If current element is not val, copy it to position k, then increment k.
 
