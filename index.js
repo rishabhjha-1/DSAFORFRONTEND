@@ -1200,6 +1200,28 @@ var topKFrequent = function(nums, k) {
 
 
 
+
+// Given an array of integers nums and an integer k, return the total number of subarrays whose sum equals to k.
+//   Input: nums = [1,1,1], k = 2
+// Output: 2
+var subarraySum = function(nums, k) {
+    let obj={"0":1}
+    let sum=0
+    let count=0
+
+    for (let i=0;i<nums.length;i++){
+        sum+=nums[i];
+        if(obj[sum-k]!=null){
+            count+=obj[sum-k]
+        }
+        obj[sum]= (obj[sum] || 0) + 1
+    }
+    return count
+    
+};
+
+
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
