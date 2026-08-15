@@ -1302,6 +1302,59 @@ var productExceptSelf = function(nums) {
 };
 
 
+// Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+//  Example 1:
+// Input: strs = ["eat","tea","tan","ate","nat","bat"]
+// Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+
+var groupAnagrams = function(strs) {
+    let map = new Map();
+
+    for (let str of strs) {
+        let key = str.split('').sort().join('');
+
+        if (!map.has(key)) {
+            map.set(key, []);
+        }
+
+        map.get(key).push(str);
+    }
+
+    return Array.from(map.values());
+};
+
+
+
+
+
+var longestConsecutive = function(nums) {
+
+    let set = new Set(nums);
+    let longest = 0;
+
+    for (let num of set) {
+
+        // Is this the beginning?
+        if (!set.has(num - 1)) {
+
+            let current = num;
+            let count = 1;
+
+            // Keep finding the next number
+            while (set.has(current + 1)) {
+                current++;
+                count++;
+            }
+
+            longest = Math.max(longest, count);
+        }
+    }
+
+    return longest;
+};
+
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
