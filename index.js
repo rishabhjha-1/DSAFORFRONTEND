@@ -1418,6 +1418,36 @@ var maxArea = function(height) {
     return maxArea
 };
 
+
+
+
+//merge sorted array without using extra space
+var merge = function(nums1, m, nums2, n) {
+    let i = m - 1; // last valid element in nums1
+    let j = n - 1; // last element in nums2
+    let k = m + n - 1; // last position of nums1
+
+    while(i >= 0 && j >= 0) {
+        if(nums1[i] > nums2[j]) {
+            nums1[k] = nums1[i];
+            i--;
+        } else {
+            nums1[k] = nums2[j];
+            j--;
+        }
+        k--;
+    }
+
+    // if nums2 still has elements
+    while(j >= 0) {
+        nums1[k] = nums2[j];
+        j--;
+        k--;
+    }
+
+    return nums1;
+};
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
