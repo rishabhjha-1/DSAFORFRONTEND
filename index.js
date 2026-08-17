@@ -1401,6 +1401,23 @@ var threeSum = function(nums) {
 };
 
 
+var maxArea = function(height) {
+    let left=0
+    let right=height.length-1
+    let maxArea=-1
+    while(left<=right){
+        maxArea=Math.max(maxArea,(Math.min(height[left],height[right])*(right-left)))
+      
+        if(height[left]>height[right]){
+            right--
+        }else{
+            left++
+        }
+
+    }
+    return maxArea
+};
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
