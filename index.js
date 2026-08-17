@@ -1472,6 +1472,30 @@ var moveZeroes = function(nums) {
 
 console.log(moveZeroes([0,1,0,3,12]));
 
+
+
+
+// Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+var sortedSquares = function (nums) {
+    let left = 0;
+    let right = nums.length-1
+    let ans = new Array(nums.length)
+    for (let i = ans.length - 1; i >= 0; i--) {
+        if (Math.abs(nums[left]) > Math.abs(nums[right])) {
+            ans[i]=(nums[left] * nums[left])
+            left++
+
+        } else {
+            ans[i]=(nums[right] * nums[right])
+            right--
+        }
+    }
+    return ans
+
+
+};
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
