@@ -1448,6 +1448,30 @@ var merge = function(nums1, m, nums2, n) {
     return nums1;
 };
 
+
+
+
+
+// Input: nums = [0,1,0,3,12]
+// Output: [1,3,12,0,0]
+var moveZeroes = function(nums) {
+    let j = 0;
+
+    // move non-zeroes forward
+    for(let i = 0; i < nums.length; i++) {
+        if(nums[i] !== 0) {
+            let temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            j++;
+        }
+    }
+
+    return nums;
+};
+
+console.log(moveZeroes([0,1,0,3,12]));
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
