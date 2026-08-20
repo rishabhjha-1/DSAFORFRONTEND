@@ -1527,6 +1527,24 @@ while(n>0){
     
 };
 
+
+
+reverse() {
+  let prev = null;
+  let current = this.head;
+
+  while (current) {
+    const next = current.next; // save next node
+
+    current.next = prev;       // reverse pointer
+
+    prev = current;            // move prev
+    current = next;            // move current
+  }
+
+  this.head = prev;
+}
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
