@@ -1496,6 +1496,37 @@ var sortedSquares = function (nums) {
 
 };
 
+
+
+
+
+
+
+
+
+
+var removeNthFromEnd = function(head, n) {
+    let fast=head
+    let slow=head
+while(n>0){
+            fast=fast.next
+            n--
+        }
+        if (fast === null) {
+        return head.next;
+    }
+      while ( fast && fast.next !== null) {
+        fast = fast.next;
+        slow = slow.next;
+    }
+
+   
+    slow.next=slow.next.next
+   
+    return head
+    
+};
+
 /*If current element is not val, copy it to position k, then increment k.
 
 After the loop ends, the first k elements of nums will be all elements that are not equal to val.
