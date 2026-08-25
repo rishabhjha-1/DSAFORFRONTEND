@@ -800,6 +800,27 @@ console.log(mergeSort([5, 2, 8, 7, 4, 6,4]),"mergeSort")
 
 
 
+
+var findPeakElement = function(nums) {
+    let left = 0;
+    let right = nums.length - 1;
+
+    while (left < right) {
+        let mid = Math.floor((left + right) / 2);
+
+        if (nums[mid] < nums[mid + 1]) {
+            // Going uphill → peak is on the right
+            left = mid + 1;
+        } else {
+            // Going downhill → peak is on left including mid
+            right = mid;
+        }
+    }
+
+    return left;
+};
+
+
 //search in an rotated array
 function searchRotatedArray(nums, target) {
   let left = 0;
